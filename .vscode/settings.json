@@ -1,0 +1,19 @@
+{
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "github.copilot.instructions.testGeneration": [
+    "// General: Use Jest as the primary testing framework unless specified otherwise in package-specific instructions.",
+    "// General: Ensure mocks are used for external dependencies or services not under test.",
+    "// General: Aim for clear, descriptive test names that explain what is being tested and the expected outcome.",
+    "// NestJS: For services, test public methods. For controllers, test route handlers and interactions with services.",
+    "// Preact: Use Preact Testing Library. Test component rendering, state changes, and event handling.",
+    "// Next.js: Use React Testing Library. Test component rendering, props, and interactions. For pages/layouts, test data fetching and conditional rendering."
+  ],
+  "github.copilot.instructions.commitMessages": [
+    "Follow conventional commit format: type(scope): subject",
+    "  - type: feat, fix, build, chore, ci, docs, perf, refactor, revert, style, test",
+    "  - scope: Optional. Can be a package name (e.g., backend, embeddable-ui, marketing, admin) or a specific feature.",
+    "  - subject: Concise description of the change, present tense, no period at the end.",
+    "Example: feat(backend): add user authentication endpoint",
+    "Example: fix(embeddable-ui): resolve issue with message rendering"
+  ]
+}

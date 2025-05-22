@@ -1,0 +1,25 @@
+{
+  "name": "omni-chat-mono-repo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "dev:backend": "lerna run dev --scope=backend --stream",
+    "dev:embeddable-ui": "lerna run dev --scope=embeddable-ui --stream",
+    "dev:marketing-website": "lerna run dev --scope=marketing-website --stream",
+    "dev:admin-portal": "lerna run dev --scope=admin-portal --stream",
+    "build": "lerna run build",
+    "dev": "lerna run dev --parallel"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^8.2.2"
+  }
+}
