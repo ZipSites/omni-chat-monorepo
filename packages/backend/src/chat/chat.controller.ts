@@ -1,4 +1,4 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ChatService } from './chat.service';
 import { SendMessageDto } from './chat.interface';
@@ -17,8 +17,12 @@ export class ChatController {
 
   @MessagePattern({ cmd: 'send_message' })
   async sendMessage(
-    @Payload() data: { sendMessageDto: SendMessageDto; user: AuthenticatedUser },
-  ): Promise<Message> { // Return Prisma Message type
+    @Payload()
+    data: {
+      sendMessageDto: SendMessageDto;
+      user: AuthenticatedUser;
+    },
+  ): Promise<Message> {
     console.log(
       'ChatController: Received send_message with payload:',
       data.sendMessageDto,
@@ -31,7 +35,7 @@ export class ChatController {
   @MessagePattern({ cmd: 'get_messages_for_user' })
   async getMessagesForUser(
     @Payload() data: { userId: string },
-  ): Promise<Message[]> { // Return array of Prisma Message type
+  ): Promise<Message[]> {
     console.log(
       'ChatController: Received get_messages_for_user with payload:',
       data,
@@ -40,7 +44,7 @@ export class ChatController {
   }
 
   @MessagePattern({ cmd: 'get_all_chat_messages' })
-  async getAllMessages(): Promise<Message[]> { // Return array of Prisma Message type
+  async getAllMessages(): Promise<Message[]> {
     console.log('ChatController: Received get_all_chat_messages');
     return this.chatService.getAllMessages();
   }

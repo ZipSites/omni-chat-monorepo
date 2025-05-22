@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { RegisterUserDto, LoginUserDto } from './auth.dto';
-import { User } from '@prisma/client';
+import { User } from '../../generated/prisma'; // Changed import path
 
 @Controller() // No path needed for microservice controllers that only use MessagePattern
 export class AuthController {

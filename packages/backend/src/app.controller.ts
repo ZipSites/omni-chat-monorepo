@@ -46,7 +46,7 @@ export class AppController {
   sendMessage(
     @Body() sendMessageDto: SendMessageDto,
     @Request() req: AuthenticatedRequest,
-  ) { // Applied formatting
+  ) {
     // req.user is now typed
     const user = req.user;
     // No need for explicit check if user or user.id is missing if type guarantees it,
