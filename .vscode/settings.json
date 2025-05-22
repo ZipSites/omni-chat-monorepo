@@ -17,8 +17,9 @@
     "Example: fix(embeddable-ui): resolve issue with message rendering"
 ],
 "cSpell.words": [
-    "Preact",
-    "uuidv",
-    "Zustand"
+  "Preact",
+  "uuidv",
+  "vercel",
+  "Zustand"
 ]
 }
