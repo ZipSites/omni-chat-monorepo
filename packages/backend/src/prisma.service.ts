@@ -3,7 +3,7 @@ import {
   OnModuleInit,
   OnApplicationShutdown,
 } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../generated/prisma'; // Corrected import path
 
 @Injectable()
 export class PrismaService
