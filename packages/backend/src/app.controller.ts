@@ -6,12 +6,19 @@ import {
   Inject,
   Param,
   UseGuards,
+  Request, // Import Request
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { SendMessageDto } from './chat/chat.interface';
 import { RegisterUserDto, LoginUserDto } from './auth/auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AppService } from './app.service'; // Import AppService
+import { User as PrismaUser } from '@prisma/client'; // Standard import for Prisma types
+
+// Define an interface for the Express request object with a typed user property
+interface AuthenticatedRequest extends Request {
+  user: Omit<PrismaUser, 'password'>;
+}
 
 @Controller()
 export class AppController {
@@ -36,8 +43,22 @@ export class AppController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('chat/send')
-  sendMessage(@Body() sendMessageDto: SendMessageDto) {
-    return this.chatServiceClient.send({ cmd: 'send_message' }, sendMessageDto);
+  sendMessage(
+    @Body() sendMessageDto: SendMessageDto,
+    @Request() req: AuthenticatedRequest,
+  ) {
+    // req.user is now typed
+    const user = req.user;
+    // No need for explicit check if user or user.id is missing if type guarantees it,
+    // but good for runtime safety if payload could somehow be malformed despite guards.
+    if (!user || !user.id) {
+      throw new Error('User not authenticated or user ID missing');
+    }
+    const payload = {
+      sendMessageDto,
+      user: { id: user.id, email: user.email, name: user.name },
+    };
+    return this.chatServiceClient.send({ cmd: 'send_message' }, payload);
   }
 
   @UseGuards(AuthGuard('jwt'))

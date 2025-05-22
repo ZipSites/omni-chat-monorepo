@@ -1,33 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { ChatMessage, SendMessageDto } from './chat.interface';
-import { v4 as uuidv4 } from 'uuid';
+import { SendMessageDto } from './chat.interface';
+import { PrismaService } from '../prisma/prisma.service';
+import { Message } from '../../generated/prisma';
 
 @Injectable()
 export class ChatService {
-  private readonly messages: ChatMessage[] = []; // In-memory store for messages
+  constructor(private readonly prisma: PrismaService) {}
 
-  sendMessage(sendMessageDto: SendMessageDto): ChatMessage {
-    const newMessage: ChatMessage = {
-      id: uuidv4(),
-      ...sendMessageDto,
-      timestamp: new Date(),
-    };
-    this.messages.push(newMessage);
+  async sendMessage(
+    sendMessageDto: SendMessageDto,
+    authorId: string,
+  ): Promise<Message> {
+    const newMessage = await this.prisma.message.create({
+      data: {
+        text: sendMessageDto.text,
+        authorId: authorId,
+      },
+    });
     console.log('ChatService: Message sent:', newMessage);
-    // Here you would typically also emit an event to the receiver
-    // For simplicity, we'll just return the message for now.
     return newMessage;
   }
 
-  getMessagesForUser(userId: string): ChatMessage[] {
+  async getMessagesForUser(userId: string): Promise<Message[]> {
     console.log(`ChatService: Getting messages for user: ${userId}`);
-    return this.messages.filter(
-      (msg) => msg.senderId === userId || msg.receiverId === userId,
-    );
+    return await this.prisma.message.findMany({
+      where: {
+        authorId: userId,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
   }
 
-  // Basic example of getting all messages - you'd want more sophisticated retrieval in a real app
-  getAllMessages(): ChatMessage[] {
-    return this.messages;
+  async getAllMessages(): Promise<Message[]> {
+    return await this.prisma.message.findMany({
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
   }
 }

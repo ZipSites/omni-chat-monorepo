@@ -11,7 +11,7 @@ async function bootstrap() {
       transport: Transport.TCP,
       options: {
         host: '0.0.0.0',
-        port: 3001, // Port for the User microservice
+        port: 8001, // Port for the User microservice
         retryAttempts: 5,
         retryDelay: 3000,
       },
@@ -25,7 +25,7 @@ async function bootstrap() {
       transport: Transport.TCP,
       options: {
         host: '0.0.0.0',
-        port: 3002, // Port for the Chat microservice
+        port: 8002, // Port for the Chat microservice
         retryAttempts: 5,
         retryDelay: 3000,
       },
@@ -39,7 +39,7 @@ async function bootstrap() {
       transport: Transport.TCP,
       options: {
         host: '0.0.0.0',
-        port: 3003, // Port for the Auth microservice
+        port: 8003, // Port for the Auth microservice
         retryAttempts: 5,
         retryDelay: 3000,
       },
@@ -50,9 +50,9 @@ async function bootstrap() {
   await app.startAllMicroservices();
   await app.listen(process.env.PORT ?? 3000);
   console.log(`Application is running on: ${await app.getUrl()}`);
-  console.log(`User Microservice is listening on port 3001`);
-  console.log(`Chat Microservice is listening on port 3002`);
-  console.log(`Auth Microservice is listening on port 3003`);
+  console.log(`User Microservice is listening on port 8001`);
+  console.log(`Chat Microservice is listening on port 8002`);
+  console.log(`Auth Microservice is listening on port 8003`);
 }
 
 bootstrap().catch((err) => {

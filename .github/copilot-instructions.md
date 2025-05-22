@@ -48,6 +48,7 @@ Refer to specific instruction files in `.github/instructions/` for detailed guid
 
 ## Next Steps / To-Do
 
+- **Track ongoing backend tasks**: Refer to and update `.github/instructions/current-tasklist.md` to keep track of backend development progress.
 - Configure NestJS backend for microservices architecture (see `backend.instructions.md`).
 - Develop UI components for the Preact embeddable chat (see `preact.instructions.md`).
 - Create pages and content for the Next.js marketing website (see `nextjs.instructions.md`).
